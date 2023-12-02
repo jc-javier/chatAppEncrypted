@@ -21,6 +21,4 @@ Screenshots:
 
 ![Screenshot 2023-12-01 151141.png](screenshots%2FScreenshot%202023-12-01%20151141.png)
 
-![Screenshot 2023-12-01 151226.png](screenshots%2FScreenshot%202023-12-01%20151226.png)
-
 ![Screenshot 2023-12-01 151945.png](screenshots%2FScreenshot%202023-12-01%20151945.png)
