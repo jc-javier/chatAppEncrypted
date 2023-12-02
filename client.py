@@ -13,6 +13,7 @@ class ChatApp(QMainWindow, Ui_MainWindow):
         self.app = app
         self.HOST = '127.0.0.1'
         self.PORT = 1234
+        self.NBITS = 2048
         self.FORMAT = 'utf-8'
         self.public_partner = None
 
@@ -39,8 +40,8 @@ class ChatApp(QMainWindow, Ui_MainWindow):
                 self.chat_listwidget.addItem('Connected Successfully')
             except:
                 print(f'Unable to connect to server {self.HOST} {self.PORT}')
-            public_key, private_key = rsa.newkeys(1024)
-            self.public_partner = rsa.PublicKey.load_pkcs1(self.client.recv(1024))  # gets server's public key
+            public_key, private_key = rsa.newkeys(self.NBITS)
+            self.public_partner = rsa.PublicKey.load_pkcs1(self.client.recv(self.NBITS))  # gets server's public key
             self.client.send(public_key.save_pkcs1("PEM"))  # send client public key to server
             self.client.send(rsa.encrypt(username.encode(self.FORMAT), self.public_partner))  # send username with server's public key
             # self.client.send(username.encode())
@@ -56,13 +57,14 @@ class ChatApp(QMainWindow, Ui_MainWindow):
 
     def listen_for_messages(self, client, private_key):
         while True:
-            response = client.recv(1024)
+            response = client.recv(self.NBITS)
             message = rsa.decrypt(response, private_key).decode(self.FORMAT).strip()  # decrypt message with client private key
             # message = client.recv(1024).decode('utf-8')
             if message != '':
                 username = message.split('~')[0]
                 content = message.split('~')[1]
-                self.chat_listwidget.addItem(f'{username}: {content}')
+                formatted_content = ' '.join(content[i:i + 50] for i in range(0, len(content), 50))
+                self.chat_listwidget.addItem(f'{username}: \n{formatted_content}')
             else:
                 break
 

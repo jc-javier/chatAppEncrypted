@@ -16,10 +16,11 @@ from PySide6.QtGui import (QAction, QBrush, QColor, QConicalGradient,
     QIcon, QImage, QKeySequence, QLinearGradient,
     QPainter, QPalette, QPixmap, QRadialGradient,
     QTransform)
-from PySide6.QtWidgets import (QAbstractItemView, QApplication, QFrame, QGridLayout,
-    QHBoxLayout, QLineEdit, QListWidget, QListWidgetItem,
-    QMainWindow, QMenu, QMenuBar, QPushButton,
-    QSizePolicy, QSpacerItem, QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QAbstractItemView, QAbstractScrollArea, QApplication, QFrame,
+    QGridLayout, QHBoxLayout, QLineEdit, QListView,
+    QListWidget, QListWidgetItem, QMainWindow, QMenu,
+    QMenuBar, QPushButton, QSizePolicy, QSpacerItem,
+    QVBoxLayout, QWidget)
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -71,16 +72,24 @@ class Ui_MainWindow(object):
         self.chat_listwidget = QListWidget(self.centralwidget)
         QListWidgetItem(self.chat_listwidget)
         self.chat_listwidget.setObjectName(u"chat_listwidget")
+        self.chat_listwidget.setMinimumSize(QSize(480, 382))
+        self.chat_listwidget.setMaximumSize(QSize(480, 382))
         font1 = QFont()
         font1.setPointSize(12)
         self.chat_listwidget.setFont(font1)
         self.chat_listwidget.setStyleSheet(u"background-color: rgb(255, 255, 255);")
         self.chat_listwidget.setFrameShape(QFrame.NoFrame)
         self.chat_listwidget.setFrameShadow(QFrame.Raised)
+        self.chat_listwidget.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+        self.chat_listwidget.setSizeAdjustPolicy(QAbstractScrollArea.AdjustToContents)
         self.chat_listwidget.setEditTriggers(QAbstractItemView.NoEditTriggers)
         self.chat_listwidget.setAlternatingRowColors(True)
         self.chat_listwidget.setSelectionMode(QAbstractItemView.NoSelection)
         self.chat_listwidget.setSelectionBehavior(QAbstractItemView.SelectItems)
+        self.chat_listwidget.setMovement(QListView.Static)
+        self.chat_listwidget.setProperty("isWrapping", False)
+        self.chat_listwidget.setResizeMode(QListView.Adjust)
+        self.chat_listwidget.setWordWrap(True)
 
         self.verticalLayout.addWidget(self.chat_listwidget)
 
@@ -92,6 +101,7 @@ class Ui_MainWindow(object):
         self.message_lineedit.setMinimumSize(QSize(0, 30))
         self.message_lineedit.setFont(font)
         self.message_lineedit.setStyleSheet(u"background-color: rgb(255, 255, 255);")
+        self.message_lineedit.setMaxLength(240)
 
         self.horizontalLayout.addWidget(self.message_lineedit)
 
@@ -143,7 +153,7 @@ class Ui_MainWindow(object):
         ___qlistwidgetitem.setText(QCoreApplication.translate("MainWindow", u"Please enter a username and click connect...", None));
         self.chat_listwidget.setSortingEnabled(__sortingEnabled)
 
-        self.message_lineedit.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Type here...", None))
+        self.message_lineedit.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Type here... (max 240 char.)", None))
 #if QT_CONFIG(tooltip)
         self.send_button.setToolTip(QCoreApplication.translate("MainWindow", u"Click or Enter", None))
 #endif // QT_CONFIG(tooltip)
