@@ -77,18 +77,25 @@ class Ui_MainWindow(object):
         font1 = QFont()
         font1.setPointSize(12)
         self.chat_listwidget.setFont(font1)
+        self.chat_listwidget.setFocusPolicy(Qt.NoFocus)
         self.chat_listwidget.setStyleSheet(u"background-color: rgb(255, 255, 255);")
         self.chat_listwidget.setFrameShape(QFrame.NoFrame)
         self.chat_listwidget.setFrameShadow(QFrame.Raised)
+        self.chat_listwidget.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
         self.chat_listwidget.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         self.chat_listwidget.setSizeAdjustPolicy(QAbstractScrollArea.AdjustToContents)
+        self.chat_listwidget.setAutoScroll(True)
+        self.chat_listwidget.setAutoScrollMargin(20)
         self.chat_listwidget.setEditTriggers(QAbstractItemView.NoEditTriggers)
         self.chat_listwidget.setAlternatingRowColors(True)
         self.chat_listwidget.setSelectionMode(QAbstractItemView.NoSelection)
         self.chat_listwidget.setSelectionBehavior(QAbstractItemView.SelectItems)
+        self.chat_listwidget.setVerticalScrollMode(QAbstractItemView.ScrollPerPixel)
+        self.chat_listwidget.setHorizontalScrollMode(QAbstractItemView.ScrollPerPixel)
         self.chat_listwidget.setMovement(QListView.Static)
         self.chat_listwidget.setProperty("isWrapping", False)
         self.chat_listwidget.setResizeMode(QListView.Adjust)
+        self.chat_listwidget.setUniformItemSizes(False)
         self.chat_listwidget.setWordWrap(True)
 
         self.verticalLayout.addWidget(self.chat_listwidget)
@@ -134,6 +141,9 @@ class Ui_MainWindow(object):
         self.menuFile.addAction(self.actionQQuit)
 
         self.retranslateUi(MainWindow)
+
+        self.chat_listwidget.setCurrentRow(-1)
+
 
         QMetaObject.connectSlotsByName(MainWindow)
     # setupUi
